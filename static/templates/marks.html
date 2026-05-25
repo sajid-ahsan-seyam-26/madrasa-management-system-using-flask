@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block page_title %}Exam Marks{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="actions">
+        <a class="btn" href="{{ url_for('add_mark') }}">Add Mark</a>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <tr>
+                <th>Admission No</th>
+                <th>Student</th>
+                <th>Subject</th>
+                <th>Exam</th>
+                <th>Marks</th>
+                <th>Total</th>
+                <th>Percentage</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+
+            {% for m in marks %}
+            <tr>
+                <td>{{ m.admission_no }}</td>
+                <td>{{ m.student_name }}</td>
+                <td>{{ m.subject }}</td>
+                <td>{{ m.exam_name }}</td>
+                <td>{{ m.marks }}</td>
+                <td>{{ m.total_marks }}</td>
+                <td>{{ "%.2f"|format((m.marks / m.total_marks) * 100) }}%</td>
+                <td>{{ m.exam_date }}</td>
+                <td>
+                    <form class="inline-form" method="POST" action="{{ url_for('delete_mark', id=m.id) }}" onsubmit="return confirm('Delete this mark?')">
+                        <button class="btn small danger" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="9">No marks found.</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <form method="POST">
+        <div class="form-grid">
+            <label>Class Name
+                <input type="text" name="name" value="{{ class_item.name if class_item else '' }}" required>
+            </label>
+
+            <label>Level
+                <input type="text" name="level" value="{{ class_item.level if class_item else '' }}">
+            </label>
+
+            <label>Room
+                <input type="text" name="room" value="{{ class_item.room if class_item else '' }}">
+            </label>
+        </div>
+
+        <button class="btn" type="submit">Save</button>
+        <a class="btn secondary" href="{{ url_for('classes') }}">Back</a>
+    </form>
+</div>
+{% endblock %}
