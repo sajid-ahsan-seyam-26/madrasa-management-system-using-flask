@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <form method="POST">
+        <div class="form-grid">
+            <label>Admission No
+                <input type="text" name="admission_no" value="{{ student.admission_no if student else '' }}" required>
+            </label>
+
+            <label>Student Name
+                <input type="text" name="name" value="{{ student.name if student else '' }}" required>
+            </label>
+
+            <label>Father Name
+                <input type="text" name="father_name" value="{{ student.father_name if student else '' }}">
+            </label>
+
+            <label>Guardian Phone
+                <input type="text" name="guardian_phone" value="{{ student.guardian_phone if student else '' }}">
+            </label>
+
+            <label>Class
+                <select name="class_id">
+                    <option value="">Select Class</option>
+                    {% for c in classes %}
+                    <option value="{{ c.id }}" {% if student and student.class_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <label>Status
+                <select name="status">
+                    {% set current_status = student.status if student else 'Active' %}
+                    <option value="Active" {% if current_status == 'Active' %}selected{% endif %}>Active</option>
+                    <option value="Inactive" {% if current_status == 'Inactive' %}selected{% endif %}>Inactive</option>
+                    <option value="Completed" {% if current_status == 'Completed' %}selected{% endif %}>Completed</option>
+                </select>
+            </label>
+
+            <label>Admission Date
+                <input type="date" name="admission_date" value="{{ student.admission_date if student else '' }}">
+            </label>
+        </div>
+
+        <label>Address
+            <textarea name="address">{{ student.address if student else '' }}</textarea>
+        </label>
+
+        <button class="btn" type="submit">Save</button>
+        <a class="btn secondary" href="{{ url_for('students') }}">Back</a>
+    </form>
+</div>
+{% endblock %}

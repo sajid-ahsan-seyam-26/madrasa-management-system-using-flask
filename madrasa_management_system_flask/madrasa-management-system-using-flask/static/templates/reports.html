@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block page_title %}Reports{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Attendance Summary</h2>
+
+    <div class="table-wrap">
+        <table>
+            <tr>
+                <th>Admission No</th>
+                <th>Student</th>
+                <th>Present</th>
+                <th>Absent</th>
+                <th>Late</th>
+            </tr>
+
+            {% for r in attendance_summary %}
+            <tr>
+                <td>{{ r.admission_no }}</td>
+                <td>{{ r.student_name }}</td>
+                <td>{{ r.present_count or 0 }}</td>
+                <td>{{ r.absent_count or 0 }}</td>
+                <td>{{ r.late_count or 0 }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5">No attendance data found.</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Due Fees Report</h2>
+
+    <div class="table-wrap">
+        <table>
+            <tr>
+                <th>Admission No</th>
+                <th>Student</th>
+                <th>Due Amount</th>
+            </tr>
+
+            {% for f in due_fees %}
+            <tr>
+                <td>{{ f.admission_no }}</td>
+                <td>{{ f.student_name }}</td>
+                <td>{{ "%.2f"|format(f.due_amount) }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">No due fees found.</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

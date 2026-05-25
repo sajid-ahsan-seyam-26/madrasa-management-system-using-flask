@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="grid">
+    <div class="stat"><span>Total Students</span><strong>{{ stats.students }}</strong></div>
+    <div class="stat"><span>Total Teachers</span><strong>{{ stats.teachers }}</strong></div>
+    <div class="stat"><span>Total Classes</span><strong>{{ stats.classes }}</strong></div>
+    <div class="stat"><span>Total Due Fees</span><strong>{{ "%.2f"|format(stats.due_fees) }}</strong></div>
+    <div class="stat"><span>Today Present</span><strong>{{ stats.today_present }}</strong></div>
+    <div class="stat"><span>Today Absent</span><strong>{{ stats.today_absent }}</strong></div>
+</div>
+
+<div class="card">
+    <h2>Recent Students</h2>
+
+    <div class="table-wrap">
+        <table>
+            <tr>
+                <th>Admission No</th>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Guardian Phone</th>
+                <th>Status</th>
+            </tr>
+            {% for student in recent_students %}
+            <tr>
+                <td>{{ student.admission_no }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.class_name or "N/A" }}</td>
+                <td>{{ student.guardian_phone }}</td>
+                <td><span class="status active">{{ student.status }}</span></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5">No students added yet.</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
